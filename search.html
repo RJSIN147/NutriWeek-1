@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Search healthy, nutrition-verified meals on NutriWeek. Filter by Veg, Non-Veg, High Protein, and more." />
+  <title>Search meals — NutriWeek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-navbar" id="app-navbar"></header>
+
+  <main class="page-search">
+    <!-- Filter Chips -->
+    <div class="filter-bar" id="filter-bar">
+      <button class="chip chip--active" data-filter="healthy" data-group="toggle" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+        Healthy
+      </button>
+      <button class="chip" data-filter="veg" data-group="diet" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+        Veg
+      </button>
+      <button class="chip" data-filter="non-veg" data-group="diet" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+        </svg>
+        Non-Veg
+      </button>
+      <button class="chip" data-filter="all" data-group="diet" type="button">All</button>
+    </div>
+
+    <!-- Results list -->
+    <ul class="results-list" id="results-list"></ul>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="empty-state" hidden>
+      <p>No meals found. Try a different search or filter.</p>
+    </div>
+
+    <!-- Inline feedback (preserved from original prototype) -->
+    <aside class="feedback-inline" aria-label="Optional feedback">
+      <p class="feedback-inline__label">Not ordering today? Tell us why</p>
+      <div class="feedback-inline__actions">
+        <button type="button" class="btn-feedback" data-feedback="price_too_high">Too expensive</button>
+        <button type="button" class="btn-feedback" data-feedback="not_enough_variety">Not enough options</button>
+        <button type="button" class="btn-feedback" data-feedback="dont_trust_nutrition">Don't trust it</button>
+        <button type="button" class="btn-feedback" data-feedback="just_browsing">Just browsing</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p class="site-footer__text">NutriWeek — prototype · Bengaluru</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="shared.js"></script>
+  <script src="search.js"></script>
+</body>
+</html>

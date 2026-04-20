@@ -3,151 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NutriWeek — Discover healthy, verified meals for busy weekdays. See calories, protein, and fat upfront. Order in seconds." />
   <title>NutriWeek — Healthy meals you can trust</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="page-landing">
-  <header class="site-header">
-    <a href="index.html" class="logo logo--link">NutriWeek</a>
-    <a href="menu.html" class="header-cta">Menu</a>
-  </header>
+<body>
+  <header class="app-navbar" id="app-navbar"></header>
 
-  <main class="marketing-main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__copy">
-        <h1 id="hero-title" class="hero__title">Healthy meals you can trust — without overthinking</h1>
-        <p class="hero__subtitle">
-          See calories, protein, and fat upfront. Choose in seconds, not minutes.
-        </p>
-        <a href="menu.html" class="btn btn-primary btn-lg">Explore Meals</a>
-      </div>
-      <figure class="hero__figure">
-        <img
-          src="https://images.unsplash.com/photo-1729769218931-435e9a261149?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Fresh healthy meal bowl with vegetables"
-          width="900"
-          height="700"
-          loading="eager"
-          class="hero__img"
-        />
-      </figure>
+  <main class="page-home">
+    <!-- Hero Carousel -->
+    <section class="hero-carousel" aria-label="Featured meals">
+      <div class="carousel-viewport" id="carousel-viewport"></div>
+      <div class="carousel-dots" id="carousel-dots"></div>
     </section>
 
-    <section class="trust" aria-labelledby="trust-title">
-      <div class="section-inner">
-        <h2 id="trust-title" class="section-title">No more guessing what’s actually healthy</h2>
-        <div class="trust-grid">
-          <article class="trust-card">
-            <div class="trust-card__icon-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&h=200&fit=crop&q=80"
-                alt=""
-                width="200"
-                height="200"
-                class="trust-card__thumb"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="trust-card__title">Verified Nutrition</h3>
-            <p class="trust-card__text">Calories, protein, fat — clearly shown</p>
-          </article>
-          <article class="trust-card">
-            <div class="trust-card__icon-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&h=200&fit=crop&q=80"
-                alt=""
-                width="200"
-                height="200"
-                class="trust-card__thumb"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="trust-card__title">No misleading labels</h3>
-            <p class="trust-card__text">No vague ‘healthy’ claims</p>
-          </article>
-          <article class="trust-card">
-            <div class="trust-card__icon-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop&q=80"
-                alt=""
-                width="200"
-                height="200"
-                class="trust-card__thumb"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="trust-card__title">Built for weekday decisions</h3>
-            <p class="trust-card__text">Quick choices during busy days</p>
-          </article>
-        </div>
+    <!-- Recommended for You -->
+    <section class="rail" aria-labelledby="recommended-title">
+      <div class="rail__header">
+        <h2 id="recommended-title" class="rail__title">Recommended for You</h2>
+        <a href="search.html" class="rail__see-all">See All ›</a>
       </div>
+      <div class="rail__scroll" id="recommended-rail"></div>
     </section>
 
-    <section class="how" aria-labelledby="how-title">
-      <div class="section-inner">
-        <h2 id="how-title" class="section-title">How it works</h2>
-        <div class="steps">
-          <div class="step-card">
-            <img
-              src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=280&fit=crop&q=80"
-              alt=""
-              width="400"
-              height="280"
-              class="step-card__img"
-              loading="lazy"
-            />
-            <span class="step-card__num">1</span>
-            <h3 class="step-card__title">Browse meals</h3>
-            <p class="step-card__text">Curated options with photos and clear macros.</p>
-          </div>
-          <div class="step-card">
-            <img
-              src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=280&fit=crop&q=80"
-              alt=""
-              width="400"
-              height="280"
-              class="step-card__img"
-              loading="lazy"
-            />
-            <span class="step-card__num">2</span>
-            <h3 class="step-card__title">See verified nutrition</h3>
-            <p class="step-card__text">Know what you’re getting before you decide.</p>
-          </div>
-          <div class="step-card">
-            <img
-              src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=280&fit=crop&q=80"
-              alt=""
-              width="400"
-              height="280"
-              class="step-card__img"
-              loading="lazy"
-            />
-            <span class="step-card__num">3</span>
-            <h3 class="step-card__title">Order directly</h3>
-            <p class="step-card__text">Connect with the restaurant in one smooth flow.</p>
-          </div>
-        </div>
+    <!-- Popular Near You -->
+    <section class="rail" aria-labelledby="popular-title">
+      <div class="rail__header">
+        <h2 id="popular-title" class="rail__title">Popular Near You</h2>
       </div>
-    </section>
-
-    <section class="cta-band" aria-label="Get started">
-      <div class="cta-band__inner">
-        <h2 class="cta-band__title">Ready to pick this week’s meals?</h2>
-        <p class="cta-band__text">Same trust and nutrition detail on every dish.</p>
-        <a href="menu.html" class="btn btn-primary btn-lg">View This Week’s Meals</a>
-      </div>
+      <div class="rail__scroll" id="popular-rail"></div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p class="site-footer__text">NutriWeek — prototype</p>
+    <p class="site-footer__text">NutriWeek — prototype · Bengaluru</p>
   </footer>
 
-  <script>
-    sessionStorage.setItem("nutriweek_funnel_start", String(Date.now()));
-  </script>
+  <script src="data.js"></script>
+  <script src="shared.js"></script>
+  <script src="home.js"></script>
 </body>
 </html>
