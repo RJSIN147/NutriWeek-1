@@ -49,7 +49,6 @@
     const tagLabels = formatTags(meal.tags);
 
     container.innerHTML = `
-      <!-- Breadcrumb -->
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="index.html">Home</a>
         <span class="breadcrumb__sep">›</span>
@@ -58,94 +57,117 @@
         )}">${escapeHtml(meal.restaurant)}</a>
       </nav>
 
-      <!-- Hero Image -->
-      <figure class="meal-hero">
-        <img src="${meal.image}"
-             alt="${escapeHtml(meal.name)}"
-             width="800" height="500" loading="eager" />
-      </figure>
+      <section class="meal-showcase">
+        <figure class="meal-hero">
+          <img src="${meal.image}"
+               alt="${escapeHtml(meal.name)}"
+               width="800" height="500" loading="eager" />
+          <div class="meal-hero__badge">Nutrition verified</div>
+        </figure>
 
-      <!-- Info Section -->
-      <div class="meal-info">
-        <h1 class="meal-info__name">${escapeHtml(meal.name)}</h1>
-        <p class="meal-info__restaurant">${escapeHtml(meal.restaurant)}</p>
+        <aside class="meal-sidecard">
+          <p class="meal-sidecard__eyebrow">At a glance</p>
+          <div class="meal-sidecard__grid">
+            <div class="meal-sidecard__stat">
+              <span class="meal-sidecard__value">${meal.calories}</span>
+              <span class="meal-sidecard__label">Calories</span>
+            </div>
+            <div class="meal-sidecard__stat">
+              <span class="meal-sidecard__value">${meal.protein}g</span>
+              <span class="meal-sidecard__label">Protein</span>
+            </div>
+            <div class="meal-sidecard__stat">
+              <span class="meal-sidecard__value">${meal.fat}g</span>
+              <span class="meal-sidecard__label">Fat</span>
+            </div>
+            <div class="meal-sidecard__stat">
+              <span class="meal-sidecard__value">₹${meal.price}</span>
+              <span class="meal-sidecard__label">Price</span>
+            </div>
+          </div>
+          <p class="meal-sidecard__note">Built for weekday ordering with transparent nutrition and a restaurant-style presentation.</p>
+        </aside>
+      </section>
 
-        <!-- Macro Badges -->
-        <div class="macro-badges">
-          <span class="macro-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="3"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 6 9 17l-5-5"/>
-            </svg>
-            ${meal.calories} Calories
-          </span>
-          <span class="macro-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="3"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 6 9 17l-5-5"/>
-            </svg>
-            ${meal.protein}g Protein
-          </span>
-          <span class="macro-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="3"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 6 9 17l-5-5"/>
-            </svg>
-            ${meal.fat}g Fat
-          </span>
+      <div class="meal-story">
+        <div class="meal-info">
+          <span class="meal-info__eyebrow">Healthy weekday pick</span>
+          <h1 class="meal-info__name">${escapeHtml(meal.name)}</h1>
+          <p class="meal-info__restaurant">${escapeHtml(meal.restaurant)}</p>
+
+          <div class="macro-badges">
+            <span class="macro-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="3"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+              ${meal.calories} Calories
+            </span>
+            <span class="macro-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="3"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+              ${meal.protein}g Protein
+            </span>
+            <span class="macro-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="3"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+              ${meal.fat}g Fat
+            </span>
+          </div>
+
+          <div class="meal-meta">
+            <span class="meal-meta__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5
+                         5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
+                         1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              Favourite
+            </span>
+            <span class="meal-meta__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              4.5
+            </span>
+            <span class="meal-meta__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+              </svg>
+              25 min
+            </span>
+          </div>
         </div>
 
-        <!-- Meta row -->
-        <div class="meal-meta">
-          <span class="meal-meta__item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5
-                       5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
-                       1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            Favourite
-          </span>
-          <span class="meal-meta__item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-            </svg>
-            4.5
-          </span>
-          <span class="meal-meta__item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-            </svg>
-            25 min
-          </span>
+        <div class="meal-description">
+          <h2 class="meal-description__title">${escapeHtml(meal.name)}</h2>
+          <p class="meal-description__restaurant">${escapeHtml(
+            meal.restaurant
+          )}</p>
+          <p class="meal-description__intro">A balanced plate designed for convenience, flavour, and clear nutrition.</p>
+          <p class="meal-description__text meal-description__text--truncated" id="meal-desc-text">
+            ${escapeHtml(meal.description)}
+          </p>
+          <button class="read-more-btn" id="read-more-btn" type="button">Read more ›</button>
+        </div>
+
+        <div class="meal-tags">
+          ${tagLabels
+            .map((label) => `<span class="tag">${escapeHtml(label)}</span>`)
+            .join("")}
         </div>
       </div>
 
-      <!-- Description -->
-      <div class="meal-description">
-        <h2 class="meal-description__title">${escapeHtml(meal.name)}</h2>
-        <p class="meal-description__restaurant">${escapeHtml(
-          meal.restaurant
-        )}</p>
-        <p class="meal-description__text meal-description__text--truncated" id="meal-desc-text">
-          ${escapeHtml(meal.description)}
-        </p>
-        <button class="read-more-btn" id="read-more-btn" type="button">Read more ›</button>
-      </div>
-
-      <!-- Tags -->
-      <div class="meal-tags">
-        ${tagLabels
-          .map((label) => `<span class="tag">${escapeHtml(label)}</span>`)
-          .join("")}
-      </div>
-
-      <!-- Sticky Action Bar -->
       <div class="meal-action-bar">
         <span class="price-lg">₹${meal.price}</span>
         <button class="btn btn-primary" id="btn-add-cart" type="button">Add to Cart</button>

@@ -150,7 +150,13 @@ function renderNavbar() {
 
   el.innerHTML = `
     <div class="navbar-inner">
-      <a href="index.html" class="logo logo--link" aria-label="NutriWeek Home">NutriWeek</a>
+      <a href="index.html" class="logo logo--link" aria-label="NutriWeek Home">
+        <span class="logo-mark">N</span>
+        <span class="logo-copy">
+          <span class="logo-copy__name">NutriWeek</span>
+          <span class="logo-copy__tag">Fresh weekday fuel</span>
+        </span>
+      </a>
 
       <form class="navbar-search" action="search.html" method="GET" role="search">
         <svg class="navbar-search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -206,8 +212,6 @@ let sessionStartMs = null;
 let orderClickMs = null;
 
 /** Deferred navigation URL while exit modal is open */
-let pendingNavigationUrl = null;
-
 function stamp(key) {
   userSession.timestamps[key] = nowIso();
 }
@@ -342,9 +346,6 @@ function closeExitModal() {
 function finishExitModalFlow() {
   markExitModalUsed();
   closeExitModal();
-  const url = pendingNavigationUrl;
-  pendingNavigationUrl = null;
-  if (url) window.location.assign(url);
 }
 
 function tryShowExitModal(trigger) {
@@ -396,56 +397,12 @@ function wireExitModal() {
   });
 }
 
-function wireInternalNavExitCapture() {
-  document.addEventListener(
-    "click",
-    (e) => {
-      const a = e.target.closest("a[href]");
-      if (!a || a.target === "_blank") return;
-      if (a.hasAttribute("download")) return;
-      const href = a.getAttribute("href");
-      if (!href || href.startsWith("#") || href.startsWith("javascript:"))
-        return;
-
-      let url;
-      try {
-        url = new URL(a.href, window.location.href);
-      } catch {
-        return;
-      }
-      if (url.protocol !== "http:" && url.protocol !== "https:") return;
-      if (url.origin !== window.location.origin) return;
-      if (
-        url.pathname === window.location.pathname &&
-        url.search === window.location.search
-      )
-        return;
-
-      if (exitModalAlreadyUsed() || userSession.ordered) return;
-
-      e.preventDefault();
-      pendingNavigationUrl = a.href;
-      tryShowExitModal("internal_navigation");
-    },
-    true
-  );
-}
-
 function wireMouseTopExitIntent() {
   document.documentElement.addEventListener("mouseleave", (e) => {
     if (e.clientY > 0) return;
     if (!e.relatedTarget && e.clientY <= 0) {
       tryShowExitModal("mouse_top_leave");
     }
-  });
-}
-
-function wirePopStateExitIntent() {
-  window.history.pushState({ nutriweekGuard: 1 }, "", window.location.href);
-  window.addEventListener("popstate", () => {
-    if (exitModalAlreadyUsed() || userSession.ordered) return;
-    window.history.pushState({ nutriweekGuard: 1 }, "", window.location.href);
-    tryShowExitModal("back_button");
   });
 }
 
@@ -485,9 +442,7 @@ function sharedInit() {
   renderNavbar();
   injectExitModal();
   wireExitModal();
-  wireInternalNavExitCapture();
   wireMouseTopExitIntent();
-  wirePopStateExitIntent();
   wireBeforeUnloadHint();
   wireInlineFeedback();
 

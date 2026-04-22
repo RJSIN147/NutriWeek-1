@@ -6,6 +6,8 @@
  */
 
 (function () {
+  let hasOpenedWhatsApp = false;
+
   /* ——— Rendering ——— */
 
   function renderCart() {
@@ -108,9 +110,20 @@
   function openCheckoutModal() {
     const modal = document.getElementById("checkout-modal");
     const waLink = document.getElementById("whatsapp-link");
+    const orderBtn = document.getElementById("btn-order-placed");
     if (!modal) return;
+    hasOpenedWhatsApp = false;
     if (waLink) waLink.href = buildCartWhatsAppUrl();
+    if (orderBtn) {
+      orderBtn.disabled = true;
+      orderBtn.textContent = "Open WhatsApp first";
+    }
     modal.hidden = false;
+    recordEvent("checkout", {
+      action: "checkout_modal_opened",
+      total: Cart.getTotal(),
+      itemCount: Cart.getCount(),
+    });
   }
 
   function closeCheckoutModal() {
@@ -120,13 +133,35 @@
 
   function wireCheckout() {
     const checkoutBtn = document.getElementById("btn-checkout");
+    const waLink = document.getElementById("whatsapp-link");
+    const orderBtn = document.getElementById("btn-order-placed");
+
     if (checkoutBtn) {
       checkoutBtn.addEventListener("click", () => {
-        userSession.contacted = true;
         stamp("checkoutStarted");
-        recordEvent("cart", { action: "checkout_clicked", total: Cart.getTotal() });
+        recordEvent("cart", {
+          action: "checkout_clicked",
+          total: Cart.getTotal(),
+          itemCount: Cart.getCount(),
+        });
         logSession("Checkout started");
         openCheckoutModal();
+      });
+    }
+
+    if (waLink && orderBtn) {
+      waLink.addEventListener("click", () => {
+        hasOpenedWhatsApp = true;
+        userSession.contacted = true;
+        stamp("whatsappOpened");
+        recordEvent("checkout", {
+          action: "whatsapp_clicked",
+          total: Cart.getTotal(),
+          itemCount: Cart.getCount(),
+        });
+        orderBtn.disabled = false;
+        orderBtn.textContent = "I placed the order";
+        logSession("WhatsApp opened from checkout");
       });
     }
 
@@ -136,13 +171,17 @@
     });
 
     /* "I placed the order" */
-    const orderBtn = document.getElementById("btn-order-placed");
     if (orderBtn) {
       orderBtn.addEventListener("click", () => {
+        if (!hasOpenedWhatsApp) return;
         orderClickMs = Date.now();
         userSession.ordered = true;
         stamp("orderConfirmed");
-        recordEvent("order", { action: "user_confirmed_placed", total: Cart.getTotal() });
+        recordEvent("order", {
+          action: "user_self_reported_placed",
+          total: Cart.getTotal(),
+          itemCount: Cart.getCount(),
+        });
         logSession("User marked: I placed the order (converted)");
         Cart.clear();
         closeCheckoutModal();

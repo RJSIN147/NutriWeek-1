@@ -25,8 +25,14 @@
              loading="${i === 0 ? "eager" : "lazy"}" />
         <div class="carousel-slide__overlay"></div>
         <div class="carousel-slide__content">
+          <span class="carousel-slide__eyebrow">Verified weekday nutrition</span>
           <h2 class="carousel-slide__title">${escapeHtml(slide.title)}</h2>
           <p class="carousel-slide__subtitle">${escapeHtml(slide.subtitle)}</p>
+          <div class="carousel-slide__stats">
+            <span>Fresh picks daily</span>
+            <span>Calories upfront</span>
+            <span>Fast weekday ordering</span>
+          </div>
           <a href="${slide.ctaLink}"
              class="btn btn-primary carousel-slide__cta">${escapeHtml(
                slide.ctaText
@@ -83,6 +89,7 @@
                width="280" height="180" loading="lazy" />
         </figure>
         <div class="meal-card-sm__body">
+          <span class="meal-card-sm__kicker">Chef-picked</span>
           <h3 class="meal-card-sm__name">${escapeHtml(meal.name)}</h3>
           <span class="meal-card-sm__price">₹${meal.price}</span>
           <span class="meal-card-sm__cal">
@@ -118,6 +125,7 @@
                width="280" height="180" loading="lazy" />
         </figure>
         <div class="restaurant-card__body">
+          <span class="restaurant-card__kicker">Healthy favourite</span>
           <h3 class="restaurant-card__name">${escapeHtml(r.name)}</h3>
           <span class="restaurant-card__meta">₹${r.avgPrice} · ${
         r.deliveryMins
@@ -132,7 +140,9 @@
      ========================================================== */
 
   function homeInit() {
-    sessionStorage.setItem(FUNNEL_START_KEY, String(Date.now()));
+    if (readFunnelStartMs() == null) {
+      sessionStorage.setItem(FUNNEL_START_KEY, String(Date.now()));
+    }
     renderCarousel();
     renderRecommended();
     renderPopular();

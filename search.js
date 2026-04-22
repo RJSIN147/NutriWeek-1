@@ -15,6 +15,7 @@
 
   const query = (getUrlParam("q") || "").trim();
   const restaurantParam = getUrlParam("restaurant") || "";
+  const restaurant = RESTAURANTS.find((r) => r.id === restaurantParam) || null;
 
   /* ——— Filtering ——— */
 
@@ -77,6 +78,7 @@
                  width="120" height="120" loading="lazy" />
           </figure>
           <div class="meal-result-card__body">
+            <span class="meal-result-card__kicker">Verified nutrition</span>
             <h3 class="meal-result-card__name">${escapeHtml(meal.name)}</h3>
             <p class="meal-result-card__restaurant">${escapeHtml(
               meal.restaurant
@@ -90,6 +92,10 @@
             <p class="meal-result-card__desc">${escapeHtml(
               meal.description.substring(0, 90)
             )}…</p>
+            <div class="meal-result-card__macros">
+              <span>${meal.protein}g protein</span>
+              <span>${meal.fat}g fat</span>
+            </div>
             ${
               meal.verified
                 ? '<span class="badge badge--verified">✓ Verified</span>'
@@ -117,6 +123,33 @@
         btn.classList.toggle("heart-btn--active");
       });
     });
+  }
+
+  function syncPageIntro() {
+    const eyebrow = document.getElementById("search-intro-eyebrow");
+    const title = document.getElementById("search-intro-title");
+    const copy = document.getElementById("search-intro-copy");
+
+    if (!eyebrow || !title || !copy) return;
+
+    if (restaurant) {
+      eyebrow.textContent = "Restaurant spotlight";
+      title.textContent = restaurant.name;
+      copy.textContent = `Browse nutrition-verified meals from ${restaurant.name}. Compare macros quickly and order with more confidence.`;
+      document.title = `${restaurant.name} — NutriWeek`;
+      return;
+    }
+
+    if (query) {
+      eyebrow.textContent = "Search results";
+      title.textContent = `Results for "${query}"`;
+      copy.textContent =
+        "Refine the list with diet filters and verified nutrition details to find the right weekday meal faster.";
+      document.title = `Search: ${query} — NutriWeek`;
+      return;
+    }
+
+    document.title = "Search meals — NutriWeek";
   }
 
   /* ——— Filter chip wiring ——— */
@@ -160,6 +193,7 @@
   /* ——— Init ——— */
 
   function searchInit() {
+    syncPageIntro();
     wireFilters();
     syncChipUI();
     renderResults();
