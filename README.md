@@ -1,92 +1,90 @@
 # NutriWeek
 
-**Healthy meals you can trust — without overthinking.**
+Healthy weekday meal discovery with verified nutrition, built as a no-backend frontend prototype.
 
-NutriWeek is a product concept that helps urban professionals discover healthy weekday meals with verified nutrition info, inside a food-delivery marketplace experience. It reduces decision fatigue by surfacing calories, protein, and fat upfront on every dish, so users can choose in seconds rather than minutes.
+NutriWeek helps users discover meals with calorie/protein/fat visibility before ordering. The app uses a marketplace-style flow with mock data, local cart storage, and console-based funnel analytics.
 
-> **Note:** This is a front-end prototype built for an academic capstone project. There is no backend server — all data is mock, analytics are logged to the browser console, and the order flow routes to WhatsApp / phone for restaurant contact.
+## Current State
 
----
+- Frontend-only prototype (no backend, no auth, no payments)
+- Multi-page vanilla app (`index/search/meal/cart/profile`)
+- Refreshed visual system (editorial layout, warm healthy-food theme)
+- Asset versioning in HTML (`styles.css?v=2`, `*.js?v=2`) to reduce stale-cache issues during local iteration
 
 ## Pages
 
-| Page | File | Description |
+| Page | File | What it does |
 |---|---|---|
-| **Homepage** | `index.html` | Hero carousel, "Recommended for You" meal rail, "Popular Near You" restaurant rail |
-| **Search** | `search.html` | Filter chips (Healthy, Veg, Non-Veg, All), text search, vertical meal result cards with verified badges |
-| **Meal Detail** | `meal.html` | Full meal view with breadcrumb, hero image, verified macro badges (calories, protein, fat), description, tags, sticky Add to Cart bar |
-| **Cart** | `cart.html` | Simulated cart with quantity controls, order total, and checkout via WhatsApp / phone modal |
-| **Profile** | `profile.html` | Placeholder profile page (coming soon) |
+| Home | `index.html` + `home.js` | Masthead, hero carousel, recommended meals rail, restaurant rail |
+| Search | `search.html` + `search.js` | Query + restaurant filtering, diet chips, results list, inline feedback |
+| Meal Detail | `meal.html` + `meal.js` | Meal showcase, nutrition summary, description/tags, sticky action bar |
+| Cart | `cart.html` + `cart-page.js` | Cart rendering, qty controls, checkout modal, WhatsApp handoff |
+| Profile | `profile.html` | Placeholder profile screen |
 
 ## User Flow
 
-```
-Homepage → Browse / Search → Meal Detail → Add to Cart → Cart → Proceed to Order → WhatsApp / Phone
-```
+`Home -> Search -> Meal Detail -> Add to Cart -> Cart -> Checkout Modal -> WhatsApp`
 
 ## Tech Stack
 
-- **HTML5** — semantic markup, ARIA attributes
-- **Vanilla CSS** — custom properties design system, mobile-first, responsive
-- **Vanilla JavaScript** — no frameworks, no build step
-- **Google Fonts** — [Inter](https://fonts.google.com/specimen/Inter)
-- **Unsplash** — placeholder food/restaurant imagery
+- HTML5
+- Vanilla CSS (`styles.css`)
+- Vanilla JavaScript (`data.js`, `shared.js`, page scripts)
+- Google Fonts: `Fraunces`, `Manrope`
+- Unsplash placeholder imagery
 
 ## Project Structure
 
-```
+```text
 NutriWeek-1/
-├── index.html          # Homepage
-├── search.html         # Search results
-├── meal.html           # Meal detail
-├── cart.html           # Cart
-├── profile.html        # Profile (placeholder)
-├── styles.css          # All styles
-├── data.js             # Centralised mock data (meals, restaurants, hero slides)
-├── shared.js           # Navbar, cart state, analytics, exit-intent, utilities
-├── home.js             # Homepage-specific logic
-├── search.js           # Search filtering & rendering
-├── meal.js             # Meal detail rendering & add-to-cart
-├── cart-page.js        # Cart rendering & checkout flow
-├── .gitignore
+├── index.html
+├── search.html
+├── meal.html
+├── cart.html
+├── profile.html
+├── styles.css
+├── data.js
+├── shared.js
+├── home.js
+├── search.js
+├── meal.js
+├── cart-page.js
+├── vercel.json
 └── README.md
 ```
 
-## Key Features
+## Key Behaviors
 
-- **Verified Nutrition Badges** — every meal card and detail page shows verified calorie, protein, and fat data
-- **Client-Side Search & Filtering** — filter by diet type (Veg/Non-Veg), health verification, and free-text search
-- **Simulated Cart** — `localStorage`-backed cart that persists across page navigations with quantity controls
-- **Session Analytics** — full funnel tracking logged to the browser console (page views, filter changes, add-to-cart, order confirmation, friction reasons)
-- **Exit-Intent Survey** — modal triggered on mouse-top-leave, back-button, or internal navigation to capture non-ordering reasons
-- **Inline Feedback** — non-blocking feedback buttons ("Too expensive", "Not enough options", etc.)
+- **Nutrition-first UI**: meals show calories/protein/fat in both list and detail views.
+- **Client-side filtering**: text + diet chips + restaurant param (`?restaurant=<id>`).
+- **Local cart**: cart persists via `localStorage` key `nutriweek_cart`.
+- **Checkout gating**: "I placed the order" is enabled only after WhatsApp link click.
+- **Session analytics**: events are logged in DevTools console via `recordEvent` / `logSession`.
+- **Exit intent modal**: shown on mouse-top leave (not internal-link/back-button hijacking).
 
 ## Running Locally
 
-No build step required. Open `index.html` in a browser:
+No build step is required.
 
 ```bash
-# Using Python's built-in HTTP server
+# Python
 python3 -m http.server 8000
 
-# Or using Node.js http-server
+# or Node
 npx -y http-server -p 8000
 ```
 
-Then navigate to `http://localhost:8000`.
+Open `http://localhost:8000`.
 
-## Analytics
+## Deployment
 
-Open your browser's DevTools Console to see session tracking events. All events are logged as structured JSON with timestamps.
+`vercel.json` is configured for:
 
-## Problem Context
+- clean URLs
+- no trailing slash
+- security headers (`X-Content-Type-Options`, `X-Frame-Options`)
 
-Urban professionals in Bengaluru want to eat healthier during weekdays but face friction in discovery, trust, and affordability. NutriWeek addresses this by:
+## Notes
 
-1. **Reducing decision fatigue** — curated meals with clear macros
-2. **Building trust** — verified nutrition badges, no vague "healthy" labels
-3. **Narrowing the health premium** — meals starting at ₹120
-
----
-
-*NutriWeek — Academic capstone prototype*
+- This repo is designed for product/prototype iteration, not production hardening.
+- Analytics are local/console-only and not sent to any external service.
